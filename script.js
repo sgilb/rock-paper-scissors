@@ -12,35 +12,63 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-  player = playerSelection.toLowerCase();
+  // Player forfeits on cancel or invalid entry
+  player = typeof playerSelection === "string" ? playerSelection.toLowerCase() : null;
+  
   computer = computerSelection.toLowerCase();
   console.log("Player: " + player + ", Computer: " + computer);
 
   if (player === computer) {
-    return "Tie! Try again";
+    return "tie";
   } else if (player === "rock") {
     if (computer === "paper") {
-      return "You lose! Paper beats Rock";
+      return "computer";
     } else if (computer === "scissors") {
-      return "You win! Rock beats Scissors";
+      return "player";
     }
   } else if (player === "paper") {
     if (computer === "rock") {
-      return "You win! Paper beats Rock";
+      return "player";
     } else if (computer === "scissors") {
-      return "You lose! Scissors beats Paper";
+      return "computer";
     }
   } else if (player === "scissors") {
     if (computer === "rock") {
-      return "You lose! Rock beats Scissors";
+      return "computer";
     } else if (computer === "paper") {
-      return "You win! Scissors beats Paper";
+      return "player";
     }
   } else {
     return "Something's gone horribly wrong!"
   }
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+  let winner;
+  let playerScore = 0;
+  let computerScore = 0;
+
+  for (let round = 1; round <= 5; round++) {
+    winner = playRound(prompt("Rock, Paper or Scissors?"), getComputerChoice());
+    if (winner === "player") {
+      playerScore++;
+      console.log(`Player wins! Score: Player ${playerScore} - ${computerScore} Computer`);
+    } else if (winner === "tie") {
+      console.log(`Round tied! Score: Player ${playerScore} - ${computerScore} Computer`);
+    }
+    // Computer wins if player loses or gives invalid input
+    else {
+      computerScore++;
+      console.log(`Computer wins! Score: Player ${playerScore} - ${computerScore} Computer`);
+    }
+  }
+
+  if (playerScore === computerScore) {
+    console.log(`Tie game! Final Score: Player ${playerScore} - ${computerScore} Computer`);
+  } else {
+    winner = playerScore > computerScore ? "Player" : "Computer";
+    console.log(`${winner} wins the game! Final Score: Player ${playerScore} - ${computerScore} Computer`);
+  }
+}
+
+game();
