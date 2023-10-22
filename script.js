@@ -1,3 +1,6 @@
+const playButton = document.getElementById("play");
+playButton.addEventListener("click", game);
+
 function getComputerChoice() {
   // Pick random number between 1 and 3
   let randomNumber = Math.floor(Math.random() * 3) + 1;
@@ -88,5 +91,3 @@ function game() {
 function printScore(playerScore, computerScore) {
   return `Player ${playerScore} - ${computerScore} Computer`;
 }
-
-game();
