@@ -13,8 +13,9 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
   // Player forfeits on cancel or invalid entry
-  player = typeof playerSelection === "string" ? playerSelection.toLowerCase() : null;
-  
+  player =
+    typeof playerSelection === "string" ? playerSelection.toLowerCase() : null;
+
   computer = computerSelection.toLowerCase();
   console.log("Player: " + player + ", Computer: " + computer);
 
@@ -39,7 +40,7 @@ function playRound(playerSelection, computerSelection) {
       return "player";
     }
   } else {
-    return "Something's gone horribly wrong!"
+    return "Something's gone horribly wrong!";
   }
 }
 
@@ -52,23 +53,40 @@ function game() {
     winner = playRound(prompt("Rock, Paper or Scissors?"), getComputerChoice());
     if (winner === "player") {
       playerScore++;
-      console.log(`Player wins! Score: Player ${playerScore} - ${computerScore} Computer`);
+      console.log(
+        "Player wins! Score: " + printScore(playerScore, computerScore)
+      );
     } else if (winner === "tie") {
-      console.log(`Round tied! Score: Player ${playerScore} - ${computerScore} Computer`);
+      console.log(
+        "Round tied! Score: " + printScore(playerScore, computerScore)
+      );
     }
     // Computer wins if player loses or gives invalid input
     else {
       computerScore++;
-      console.log(`Computer wins! Score: Player ${playerScore} - ${computerScore} Computer`);
+      console.log(
+        "Computer wins! Score: " + printScore(playerScore, computerScore)
+      );
     }
   }
 
   if (playerScore === computerScore) {
-    console.log(`Tie game! Final Score: Player ${playerScore} - ${computerScore} Computer`);
+    console.log(
+      "Tie game! Final Score: " + printScore(playerScore, computerScore)
+    );
   } else {
     winner = playerScore > computerScore ? "Player" : "Computer";
-    console.log(`${winner} wins the game! Final Score: Player ${playerScore} - ${computerScore} Computer`);
+    console.log(
+      `${winner} wins the game! Final Score: ${printScore(
+        playerScore,
+        computerScore
+      )}`
+    );
   }
+}
+
+function printScore(playerScore, computerScore) {
+  return `Player ${playerScore} - ${computerScore} Computer`;
 }
 
 game();
