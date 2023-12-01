@@ -9,32 +9,15 @@ options.addEventListener("click", (event) => {
 
   if (choice === "rock" || choice === "paper" || choice === "scissors") {
     winner = playRound(choice, getComputerChoice());
-    if (winner === "player") {
-      playerScore++;
-      console.log(
-        "Player wins! Score: " + printScore(playerScore, computerScore)
-      );
-    } else if (winner === "tie") {
-      console.log(
-        "Round tied! Score: " + printScore(playerScore, computerScore)
-      );
-    }
-    else {
-      computerScore++;
-      console.log(
-        "Computer wins! Score: " + printScore(playerScore, computerScore)
-      );
-    }
   }
 
   if (playerScore === 5 || computerScore === 5) {
     winner = playerScore > computerScore ? "Player" : "Computer";
-    console.log(
-      `${winner} wins the game! Final Score: ${printScore(
-        playerScore,
-        computerScore
-      )}`
-    );
+
+    const buttons = options.querySelectorAll("button");
+    for (button of buttons) {
+      button.disabled = true;
+    }
   }
 });
 
@@ -64,34 +47,42 @@ function playRound(playerSelection, computerSelection) {
   } else if (player === "rock") {
     if (computer === "paper") {
       winner = "computer";
+      computerScore++;
     } else if (computer === "scissors") {
       winner = "player";
+      playerScore++;
     }
   } else if (player === "paper") {
     if (computer === "rock") {
       winner = "player";
+      playerScore++;
     } else if (computer === "scissors") {
       winner = "computer";
+      computerScore++;
     }
   } else if (player === "scissors") {
     if (computer === "rock") {
       winner = "computer";
+      computerScore++
     } else if (computer === "paper") {
       winner = "player";
+      playerScore++
     }
   } else {
     console.log("Something's gone horribly wrong!");
   }
 
   const roundWinner = document.getElementById("winner");
-  roundWinner.innerText =
-    winner === "tie"
-      ? "Round tied!"
-      : `${winner.charAt(0).toUpperCase() + winner.slice(1)} wins!`;
+  roundWinner.innerText = printScore(winner, playerScore, computerScore);
 
   return winner;
 }
 
-function printScore(playerScore, computerScore) {
-  return `Player ${playerScore} - ${computerScore} Computer`;
+function printScore(winner, playerScore, computerScore) {
+  roundResult = (winner === "tie")
+  ? "Round tied! "
+  : `${winner.charAt(0).toUpperCase() + winner.slice(1)} wins! `
+  
+  return roundResult + `Player ${playerScore} - ${computerScore} Computer`;  
+
 }
