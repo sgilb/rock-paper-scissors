@@ -1,11 +1,10 @@
 const options = document.getElementById("options");
 let playerScore = 0;
 let computerScore = 0;
+let winner;
 
 options.addEventListener("click", (event) => {
   const choice = event.target.id;
-
-  let winner;
 
   if (choice === "rock" || choice === "paper" || choice === "scissors") {
     winner = playRound(choice, getComputerChoice());
@@ -18,20 +17,16 @@ options.addEventListener("click", (event) => {
     for (button of buttons) {
       button.disabled = true;
     }
+    document.getElementById("instruction").innerText = "";
   }
 });
 
 function getComputerChoice() {
-  // Pick random number between 1 and 3
-  let randomNumber = Math.floor(Math.random() * 3) + 1;
+  const choices = ["rock", "paper", "scissors"];
+  // Pick random number between 0 and 2
+  const randomNumber = Math.floor(Math.random() * 3);
 
-  if (randomNumber === 1) {
-    return "rock";
-  } else if (randomNumber === 2) {
-    return "paper";
-  } else {
-    return "scissors";
-  }
+  return choices[randomNumber];
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -63,10 +58,10 @@ function playRound(playerSelection, computerSelection) {
   } else if (player === "scissors") {
     if (computer === "rock") {
       winner = "computer";
-      computerScore++
+      computerScore++;
     } else if (computer === "paper") {
       winner = "player";
-      playerScore++
+      playerScore++;
     }
   } else {
     console.log("Something's gone horribly wrong!");
@@ -79,10 +74,10 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function printScore(winner, playerScore, computerScore) {
-  roundResult = (winner === "tie")
-  ? "Round tied! "
-  : `${winner.charAt(0).toUpperCase() + winner.slice(1)} wins! `
-  
-  return roundResult + `Player ${playerScore} - ${computerScore} Computer`;  
+  roundResult =
+    winner === "tie"
+      ? "Round tied! "
+      : `${winner.charAt(0).toUpperCase() + winner.slice(1)} wins! `;
 
+  return roundResult + `Player ${playerScore} - ${computerScore} Computer`;
 }
